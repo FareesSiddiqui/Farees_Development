@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import processing.core.*;
 
 /**
@@ -7,12 +9,15 @@ import processing.core.*;
 public class Main extends PApplet{
 	
 	/*Instantiate player class*/
-	public static player player;
-
+	Player player;
 	
-	/*Character Image*/
+	Gun mg;
+	
+	//Screen variable to control what part of the game runs
+	int screen = 0;
+	
+	//Player image;
 	public static PImage playerImg;
-			
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -21,34 +26,51 @@ public class Main extends PApplet{
 
 	@Override
 	public void settings() {
-		size(900, 600);
+		size(600, 600);
+		player = new Player(300, 300, 5, this);
+		mg = new Gun("Machine Gun");
 		
 	}
 	
 	@Override
 	public void setup() {
-	
+		playerImg = loadImage("player.png");	
+		ellipseMode(CENTER);
+
 	}
 	
 	public void game() {
-
+		background(60, 75, 114);
+		
+		player.update();
+		
+		player.reload();
+				
+		
+	}
+	
+	@Override
+	public void mouseClicked() {
+		screen = 1;
 	}
 	
 	@Override
 	public void draw() {
-		if(mousePressed == true) {
-			line(pmouseX, pmouseY, mouseX, mouseY);
-		}
+		
+		if(screen == 1)
+			game();
+		
 		
 	}
 	
 	@Override
     public void keyPressed() {
+		player.keyp();
     	
     }
     
     @Override
     public void keyReleased() {
-    	
+    	player.keyr();
     }
 }
