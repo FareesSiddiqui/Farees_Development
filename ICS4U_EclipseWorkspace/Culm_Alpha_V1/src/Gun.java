@@ -1,41 +1,80 @@
+import java.util.ArrayList;
+
+import processing.core.PApplet;
 
 public class Gun {
+	/*ArrayList for bullets*/
+	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	
 	public static String gun;
 	
 	public static boolean machine = false, pistol = false, shotty = false;
-		
-	public static int ammo, damage, cartridge, cartridgeMax;
 	
 	Gun(String type){
 		this.gun = type;
+		
+	}
+	
+	public static class Bullet{
+		public static int x, y, speed;
+		
+		public static int ammo, damage, cartridge, cartridgeMax;
+		
+		protected final PApplet pp;
+		
+		@SuppressWarnings("static-access")
+		Bullet(int x1, int y1, int speed1, PApplet applet){
+			this.x = x1;
+			this.y = y1;
+			this.speed = speed1;
+			this.pp = applet;
+		}
+		
+		@SuppressWarnings("static-access")
+		void spawnBullets() {
+			/*Machine gun has 3 reloads of 300 rounds each*/
+			if(Gun.gun.equals("Machine Gun")) {
+				this.ammo = 900;
+				this.cartridge = 300;
+				this.cartridgeMax = 300;
+				this.damage = 20;
+			}
+			
+			/*Pistol is the beginner gun has infinite ammo and 10 round cartridges*/
+			if(Gun.gun.equals("Pistol")) {
+				this.ammo = 50;
+				this.damage = 10;
+			}
+			
+			/*Shotgun has 6 reloads of 7 rounds each*/
+			if(Gun.gun.equals("Shotgun")) {
+				this.ammo = 42;
+				this.cartridge = 7;
+				this.cartridgeMax = 7;
+				this.damage = 60;
+			}
+		}
+		
+		void update() {
+			
+		}
+		
 	}
 	
 	void select() {
-		
-		/*Machine gun has 3 reloads of 300 rounds each*/
-		if(this.gun.equals("Machine Gun")) {
-			this.machine = true;
-			this.ammo = 900;
-			this.cartridge = 300;
-			this.cartridgeMax = 300;
-			this.damage = 20;
+		if(Gun.gun.equals("Machine Gun")) {
+			Gun.machine = true;
+			
 		}
 		
-		/*Pistol is the beginner gun has infinite ammo and 10 round cartridges*/
-		if(this.gun.equals("Pistol")) {
-			this.pistol = true;
-			this.ammo = 50;
-			this.damage = 10;
+		if(Gun.gun.equals("Pistol")) {
+			Gun.pistol = true;
+			
 		}
 		
-		/*Shotgun has 6 reloads of 7 rounds each*/
-		if(this.gun.equals("Shotgun")) {
-			this.shotty = true;
-			this.ammo = 42;
-			this.cartridge = 7;
-			this.cartridgeMax = 7;
-			this.damage = 60;
+		if(Gun.gun.equals("Shotgun")) {
+			Gun.shotty = true;
+			
 		}
 	}
 }

@@ -11,13 +11,13 @@ public class Main extends PApplet{
 	/*Instantiate player class*/
 	Player player;
 	
-	Gun mg;
 	
-	//Screen variable to control what part of the game runs
+	/*Screen variable to control what part of the game runs*/
 	int screen = 0;
 	
-	//Player image;
+	/*Player image*/
 	public static PImage playerImg;
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -28,8 +28,7 @@ public class Main extends PApplet{
 	public void settings() {
 		size(600, 600);
 		player = new Player(300, 300, 5, this);
-		mg = new Gun("Machine Gun");
-		
+			
 	}
 	
 	@Override
@@ -56,10 +55,8 @@ public class Main extends PApplet{
 	
 	@Override
 	public void draw() {
-		
 		if(screen == 1)
 			game();
-		
 		
 	}
 	
