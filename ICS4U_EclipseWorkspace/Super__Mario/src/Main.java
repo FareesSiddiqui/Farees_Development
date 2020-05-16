@@ -221,7 +221,19 @@ public class Main extends PApplet{
 		  
 		translate(-cameraXpos, 0);
 
-		scale(1);
+//		scale(1);
+//		  
+//		int imageNumber1 = (int)(cameraXpos/(1280));
+//		int imageNumber2 = (int)(cameraXpos/(1280))+1;
+//		  
+//		if(imageNumber1<=9&&imageNumber1>=0)
+//		  image(img[imageNumber1], imageNumber1*1280, 370);
+//		if(imageNumber2<=9&&imageNumber2>=0)
+//		  image(img[imageNumber2], imageNumber2*1280, 370);
+//		
+//		
+		pushMatrix();
+//		scale(1);
 		  
 		int imageNumber1 = (int)(cameraXpos/(1280));
 		int imageNumber2 = (int)(cameraXpos/(1280))+1;
@@ -232,7 +244,6 @@ public class Main extends PApplet{
 		  image(img[imageNumber2], imageNumber2*1280, 370);
 		
 		
-		pushMatrix();
 		mario.update();
 		game();
 		popMatrix();

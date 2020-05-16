@@ -128,6 +128,7 @@ public class Mario extends Character{
     	
     	if(getKeys(2) == true && hit == true) {
     		jump();
+    		setKeys(2, !getKeys(2));
     	}   	
     	
     	applet.rectMode(applet.CENTER);
