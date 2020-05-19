@@ -1,50 +1,177 @@
-import processing.core.*;
+import processing.core.PApplet;
+import processing.core.PVector;
 
-public class testPlayer {
+public class Character {
+		
+	PVector position, velocity, gravity;
 	
-	int x, y, speed;
+	boolean[] keys = new boolean[5];
 	
-	protected final PApplet p;
+	protected final PApplet applet;
 	
-	public static boolean[] keys = new boolean[5];
+	int mass;
 	
-	testPlayer(int _x, int _y, int _speed, PApplet _p){
-		p = _p;
-		speed = _speed;
-		x = _x;
-		y = _y;
+	int speed;
+	
+	float targetX, targetY, easing = (float)0.05;
+			
+	private boolean hit = false;
+	
+	private float dx;
+	
+	private char last;
+	
+	private int jump = 20;
+		
+	Character(int x, int y, int m, int speed1, PApplet pp){
+		velocity = new PVector(0, 0);
+		position = new PVector(x, y);
+		gravity = new PVector(0, (float) 1.2);
+		mass = m;
+		speed = speed1;
+		applet = pp;
+		
+	}
+	
+	public boolean getKeys(int i) {
+		return keys[i];
+	}
+	
+	public float getX() {
+		return position.x;
+	}
+	
+	public float getY() {
+		return position.y;
+	}
+	
+	public void zeroLast() {
+		last = ' ';
+	}
+	
+	public char getLastKey() {
+		return last;
 	}
 	
 	void update() {
-		if(keys[0])
-			x += speed;
+		velocity.add(gravity);	
+		position.add(velocity);
 		
-		else if(keys[1])
-			x -= speed;
+		if(velocity.x >= 10) {
+			velocity.x = 10;
+		}
 		
-		p.ellipse(50, 900, 50, 50);
+		if(keys[0]) {
+			targetX = velocity.x - 2;
+						
+			dx = targetX - velocity.x;
+			velocity.x += dx*easing;
+			
+			if(position.x <= 25) {
+				position.x = 40;
+				velocity.x = 0;
+			}
+			
+			
+		}
+		
+		
+		if(keys[1]) {
+			
+			targetX = velocity.x + 2;
+			
+			float dx = targetX - velocity.x;
+			velocity.x += dx*easing;
+			
+			if(position.x >= 9945) {
+				position.x = 9945;
+				velocity.x = 0;
+			}
+			
+		}
+		
+		else if(!keys[0] && !keys[1]) {
+			targetX = 0;
+			dx = targetX-velocity.x;
+			velocity.x += dx*0.1;
+		}
+		
+		
+		if(position.x >= 6085) {
+//			velocity.x = 0;
+			position.x = 6085;//1475
+		}
+		
+		if(position.x <= 25) {
+			position.x = 25;
+			velocity.x = 0;
+		}
+		
+		if(position.y >= 1000) {
+			position.y = 1000;
+			velocity.y = 0;
+			hit = true;
+		}
+		
+
+		if(keys[2] == true && hit == true) {
+			keys[2] = false;
+			velocity.y -= jump;
+			keys[2] = !keys[2];
+			hit = !hit;
+		}
+		
 	}
 	
 	void keyp() {
-		if(p.key == 'd') {
-			keys[0] = true;
+		
+		if(applet.key == 'w' || applet.key == 'W') {
+			keys[2] = true;
+			
 		}
 		
-		else if(p.key == 'a') {
-			keys[1] = true;
+		if(applet.key == 's' || applet.key == 'S') {
+			keys[3] = true;
 		}
-	}
-	
-	void keyr() {
-		if(p.key == 'd') {
-			keys[0] = false;
-		}
-		
-		else if(p.key == 'a') {
-			keys[1] = false;
-		}
-	}
-	
-	
 
+		if(applet.key == 'a' || applet.key == 'A') {
+			keys[0] = true;
+			last = 'a';
+		}
+		
+		if(applet.key == 'd' || applet.key == 'D') {
+			keys[1] = true;
+			last = 'd';
+		}
+		
+		if(applet.key == ' ' || applet.key == ' ') {
+			keys[4] = true;
+		}
+		
+	}
+
+	void keyr() {
+		
+		if(applet.key == 'w' || applet.key == 'W') {
+			keys[2] = false;
+		}
+		
+		if(applet.key == 's' || applet.key == 'S') {
+			keys[3] = false;
+		}
+
+		if(applet.key == 'a' || applet.key == 'A') {
+			keys[0] = false;
+			last = 'a';
+		}
+		
+		if(applet.key == 'd' || applet.key == 'D') {
+			keys[1] = false;
+			last = 'd';
+		}
+		
+		if(applet.key == ' ' || applet.key == ' ') {
+			keys[4] = false;
+		}
+	}
 }
