@@ -1,6 +1,6 @@
 # Farees_Development
 
-(Work in progress)
+**Project Status: Finished**
 
 This is a remake of the classical game Flappy bird with a Machine Learning algorithm (Neuro Evolution of Augmented Topologies) to make an unbeatable bot for it. The game was made using pygame for the actual game and the python neat module for the AI
 
