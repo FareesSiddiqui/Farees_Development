@@ -1,0 +1,3 @@
+Pillow
+opencv-python
+opencv-contrib-python
