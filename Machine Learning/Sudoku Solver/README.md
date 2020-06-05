@@ -4,7 +4,7 @@ This program uses opencv and backtracking to solve a sudoku board, when finished
 
 To install the dependencies for this project run the command `pip install -r requirements.txt` in your terminal
 
-##TODO:
+## TODO:
 Create digit recognition algorithm
 Use those digits to create a virtual board and solve using `solver.py`
 use opencv to fill in the image of the board
