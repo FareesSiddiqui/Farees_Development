@@ -6,7 +6,7 @@ public class Main extends PApplet{
  
     public Cell[][] grid = new Cell[rows][cols];
     
-    public boolean[] keys = new boolean[2];
+    public boolean[] keys = new boolean[3];
     
     int mouseCounter = 0;
         
@@ -23,7 +23,7 @@ public class Main extends PApplet{
     }
  
     public void settings() {
-        size(900, 900);
+        size(1200, 900);
  
     }
  
@@ -49,20 +49,48 @@ public class Main extends PApplet{
          }
     }
     
-    public void gridControl() {    	
+    public void resetGrid() {    	
     	if(keys[0]) {
     		mouseCounter = 0;
+    		startNode = 0;
+    		endNode = 0;
+    		wallNode = 0;
     		for(int i = 0; i < rows; i++) {
                 for(int j = 0; j < cols; j++) {
-                	 
                     grid[i][j].show(); 
                 }
             }
     	}
     }
+    
+    public void debug() {
+    	if(keys[2] ) {
+    		println("Walls: "+wallNode+" Start Nodes: "+startNode+" endNodes: "+endNode);
+    	}
+    }
   
     public void draw() {
-    	gridControl();
+    	resetGrid();
+    	debug();
+    	
+    	for(int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				if(grid[i][j].getNode().equals("Start Node") && grid[i][j].counted == false) {
+					grid[i][j].counted = true;
+					startNode++;
+				}
+				
+				if(grid[i][j].getNode().equals("End Node") && grid[i][j].counted == false) {
+					grid[i][j].counted = true;
+					endNode++;
+				}
+				
+				if(grid[i][j].getNode().equals("Wall") && grid[i][j].counted == false) {
+					grid[i][j].counted = true;
+					wallNode++;
+				}
+			}
+		}
     	
     	//Only draw walls if start and end nodes have been selected
     	
@@ -70,7 +98,6 @@ public class Main extends PApplet{
     		if(mousePressed && mouseCounter > 2) {
         		grid[mouseX/Cell.w][mouseY/Cell.h].colorNode(39, 58, 179);
         		grid[mouseX/Cell.w][mouseY/Cell.h].setNode("Wall");
-        		wallNode++;
         	}
     	} 
     	
@@ -87,8 +114,6 @@ public class Main extends PApplet{
     		grid[mouseX/Cell.w][mouseY/Cell.h].colorNode(0, 255, 0); 
     		StartNodeX = mouseX/Cell.w; StartNodeY = mouseY/Cell.h;
     		grid[mouseX/Cell.w][mouseY/Cell.h].setNode("Start Node");
-    		sPlaced = true;
-    		startNode++;
     	}
     	
     	//End node
@@ -96,30 +121,29 @@ public class Main extends PApplet{
     		grid[mouseX/Cell.w][mouseY/Cell.h].colorNode(255, 0, 0); 
     		EndNodeX = mouseX/Cell.w; EndNodeY = mouseY/Cell.h;
     		grid[mouseX/Cell.w][mouseY/Cell.h].setNode("End Node");
-    		ePlaced = true;
-    		endNode++;
     	}
     	
     	
     	else if(mouseCounter > 1) {
     		mouseCounter = 2;
-//    		println("Start and End Nodes have been selected, Please draw the walls");
     	}
     	    	
-    	
-        println("start nodes: " + startNode + " endNodes: " + endNode + " walls: " + wallNode);
-		mouseCounter++;
+    	mouseCounter++;
     }
     
     
     
     public void keyPressed() {
-    	if(key == 'r') {
+    	if(key == 'r') { //Reset board
     		keys[0] = true;
     	}
     	
-    	if(key == 'c') {
+    	else if(key == 'c') { //Clear last node (WIP)
     		keys[1] = true;
+    	}
+    	
+    	else if(key == 'd') { //Debug
+    		keys[2] = true;
     	}
     	
     }
@@ -129,8 +153,12 @@ public class Main extends PApplet{
     		keys[0] = false;
     	}
     	
-    	if(key == 'c') {
+    	else if(key == 'c') {
     		keys[1] = false;
+    	}
+    	
+    	else if(key == 'd') {
+    		keys[2] = false;
     	}
     	
     }
