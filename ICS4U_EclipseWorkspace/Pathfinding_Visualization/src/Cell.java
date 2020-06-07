@@ -5,7 +5,9 @@ public class Cell {
     private int x, y;
  
     public static int w = 900 / Main.cols, h = 900 / Main.rows;
- 
+    
+    public boolean counted = false;
+    
     protected final PApplet p;
     
     private String Node;
@@ -53,7 +55,8 @@ public class Cell {
     }
  
     void show() {
-    	
+    	p.fill(0);
+    	p.stroke(255);
         p.rect(x*w, y*h, w, h);
     }
 }
