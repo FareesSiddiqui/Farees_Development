@@ -11,3 +11,11 @@ This is a pathfinding visualization program, that is coded in java using the `pr
 4. Navigate to the  `library` folder, for me this is `processing-3.5.4/core/library` and click select folder
 5. from the selections that pop up on the right side click the checkbox for `core.jar` and click finish at the bottom
 6. Now the `core.jar` file should be in your package explorer, right click it and add it to the build path by doing `Build Path>Add to build path`
+
+
+## TODO:
+- Implement Pathfinding algorithms
+- Beautify the UI
+- Add Animations
+- Add Live recalculations for the search algorithms
+ 
