@@ -1,166 +1,153 @@
 import processing.core.*;
- 
+import java.util.ArrayList;
 public class Main extends PApplet{
- 
-    public static int rows = 50, cols = 50;
- 
-    public Cell[][] grid = new Cell[rows][cols];
-    
-    public boolean[] keys = new boolean[3];
-    
-    int mouseCounter = 0;
-        
-    int StartNodeX, StartNodeY, EndNodeX, EndNodeY;
-    
-    boolean sPlaced = false;
-    boolean ePlaced = false;
-    
-    int startNode = 0; int endNode = 0; int wallNode = 0;
-        
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-        PApplet.main("Main");
-    }
- 
-    public void settings() {
-        size(1200, 900);
- 
-    }
- 
-    public void setup() {
-        background(255);
- 
-        for(int i = 0; i < rows; i++) {
-            for(int j = 0; j < cols; j++) {
-                grid[i][j] = new Cell(i, j, this);
-            }
-        }
-        
-        generateGrid();
-    }
-    
-    public void generateGrid() {
-    	 for(int i = 0; i < rows; i++) {
-             for(int j = 0; j < cols; j++) {
-             	 
-                 grid[i][j].show(); 
-                 grid[i][j].setNode("Empty Node");
-             }
-         }
-    }
-    
-    public void resetGrid() {    	
-    	if(keys[0]) {
-    		mouseCounter = 0;
-    		startNode = 0;
-    		endNode = 0;
-    		wallNode = 0;
-    		for(int i = 0; i < rows; i++) {
-                for(int j = 0; j < cols; j++) {
-                    grid[i][j].show(); 
-                }
-            }
-    	}
-    }
-    
-    public void debug() {
-    	if(keys[2] ) {
-    		println("Walls: "+wallNode+" Start Nodes: "+startNode+" endNodes: "+endNode);
-    	}
-    }
-  
-    public void draw() {
-    	resetGrid();
-    	debug();
-    	
-    	for(int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				if(grid[i][j].getNode().equals("Start Node") && grid[i][j].counted == false) {
-					grid[i][j].counted = true;
-					startNode++;
-				}
-				
-				if(grid[i][j].getNode().equals("End Node") && grid[i][j].counted == false) {
-					grid[i][j].counted = true;
-					endNode++;
-				}
-				
-				if(grid[i][j].getNode().equals("Wall") && grid[i][j].counted == false) {
-					grid[i][j].counted = true;
-					wallNode++;
-				}
+	
+	static int rows = 10;
+	static int cols = 10;
+	
+	ArrayList<Node> path = new ArrayList<Node>();
+	
+	Node[][] grid = new Node[rows][cols];
+	
+	Node Start, End, current;
+	
+	ArrayList<Node> openSet = new ArrayList<Node>();
+	
+	ArrayList<Node> closedSet = new ArrayList<Node>();
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		PApplet.main("Main");
+	}
+	
+	public void settings() {
+		size(900,900);
+	}
+	
+	
+	void removeFromArray(ArrayList<Node> a, Node elt) {
+		for(int i = a.size()-1; i >= 0; i--) {
+			if(a.get(i) == elt) {
+				a.remove(i); 
 			}
 		}
-    	
-    	//Only draw walls if start and end nodes have been selected
-    	
-    	try {
-    		if(mousePressed && mouseCounter > 2) {
-        		grid[mouseX/Cell.w][mouseY/Cell.h].colorNode(39, 58, 179);
-        		grid[mouseX/Cell.w][mouseY/Cell.h].setNode("Wall");
-        	}
-    	} 
-    	
-    	catch (Exception e){
-    		println("Get back on the board pwease uwu");
-    	}
-         
-    }
- 
-    public void mousePressed() {
-    	   	
-    	//Start Node
-    	if(mouseCounter == 0) {
-    		grid[mouseX/Cell.w][mouseY/Cell.h].colorNode(0, 255, 0); 
-    		StartNodeX = mouseX/Cell.w; StartNodeY = mouseY/Cell.h;
-    		grid[mouseX/Cell.w][mouseY/Cell.h].setNode("Start Node");
-    	}
-    	
-    	//End node
-    	else if(mouseCounter == 1) {
-    		grid[mouseX/Cell.w][mouseY/Cell.h].colorNode(255, 0, 0); 
-    		EndNodeX = mouseX/Cell.w; EndNodeY = mouseY/Cell.h;
-    		grid[mouseX/Cell.w][mouseY/Cell.h].setNode("End Node");
-    	}
-    	
-    	
-    	else if(mouseCounter > 1) {
-    		mouseCounter = 2;
-    	}
-    	    	
-    	mouseCounter++;
-    }
-    
-    
-    
-    public void keyPressed() {
-    	if(key == 'r') { //Reset board
-    		keys[0] = true;
-    	}
-    	
-    	else if(key == 'c') { //Clear last node (WIP)
-    		keys[1] = true;
-    	}
-    	
-    	else if(key == 'd') { //Debug
-    		keys[2] = true;
-    	}
-    	
-    }
-    
-    public void keyReleased() {
-    	if(key == 'r') {
-    		keys[0] = false;
-    	}
-    	
-    	else if(key == 'c') {
-    		keys[1] = false;
-    	}
-    	
-    	else if(key == 'd') {
-    		keys[2] = false;
-    	}
-    	
-    }
- 
+	}
+	
+	public void setup() {
+		background(255);
+		for(int i = 0; i < rows; i++) {
+			for(int j = 0; j < cols; j++) {
+				grid[i][j] = new Node(i, j, this);
+			}
+		}
+		
+		for(int i = 0; i < rows; i++) {
+			for(int j = 0; j < cols; j++) {
+				grid[i][j].addNeighbors(grid);
+			}
+		}
+		
+		Start = grid[0][0];
+		End = grid[rows-1][cols-1];
+		
+		openSet.add(Start);
+	}
+	
+	public double heuristic(Node a, Node b) {
+		return dist(a.i, a.j, b.i, b.j);
+	}
+	
+	public void draw() {	
+		
+		try {
+			
+			if(openSet.size() > 0) {
+				// Keep going
+				
+				int winner = 0;
+				for(int i = 0; i < openSet.size(); i++) {
+					if(openSet.get(i).fCost < openSet.get(winner).fCost) {
+						winner = i;
+					}
+				}
+				
+				current = openSet.get(winner);
+				
+				if(current == End) {
+					Node temp = current;
+					
+					while(temp.previous != null) {
+						path.add(temp.previous);
+						temp = temp.previous;
+					}
+					println("DONE!");
+					noLoop();
+				}
+				
+				removeFromArray(openSet, current);
+				closedSet.add(current);
+				
+				for(int i = 0; i < current.neighbors.size(); i++) {
+					Node neighbor = current.neighbors.get(i);
+					
+					if(!closedSet.contains(neighbor)) {
+						double tempG = current.gCost;
+						
+						if(openSet.contains(neighbor)) {
+							if(tempG < neighbor.gCost) {
+								neighbor.gCost = tempG;
+							}
+						} else {
+							neighbor.gCost = tempG;
+							openSet.add(neighbor);
+						}
+						
+						neighbor.hCost = heuristic(neighbor, End);
+						neighbor.fCost = neighbor.gCost + neighbor.fCost;
+						neighbor.previous = current;
+						
+					}
+					
+				}
+				
+			} else {
+				//No solution
+				println("NO SOLUTION!");
+				noLoop();
+			}
+			
+			background(0);
+			
+			for(int i = 0; i < rows; i++) {
+				for(int j = 0; j < cols; j++) {
+					grid[i][j].show(255, 255, 255);
+				}
+			}
+			
+			for(int i = 0; i < openSet.size(); i++) {
+				openSet.get(i).show(0, 255, 0);
+			}
+			
+			for(int i = 0; i < closedSet.size(); i++) {
+				closedSet.get(i).show(255, 0, 0);
+			}
+						
+			for(int i = 0; i < path.size(); i++) {
+				path.get(i).show(0, 0, 255);	
+//				grid[End.i][End.j].show(0, 0, 255);
+			}
+			
+			
+		} catch(Exception e) {
+			println("lol there was error somewhere have fun ignoring it for 6 months");
+			
+		}
+		
+		
+	}
+	
+	public void mousePressed() {
+		
+	}
+
 }
