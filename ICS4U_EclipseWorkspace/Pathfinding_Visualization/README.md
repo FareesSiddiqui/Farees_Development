@@ -31,7 +31,8 @@ After the start and end nodes have been selected you can hold down the mouse and
 
 
 #### TODO:
-- Implement Pathfinding algorithms
-- Beautify the UI
-- Add Animations
+- Fix A* Diagonal paths
+- Add user controllable start and end nodes
+- Beautify the UI / re-implement
 - Add Live recalculations for the search algorithms
+- Implement more algorithms, next one should be Greedy best first search;
