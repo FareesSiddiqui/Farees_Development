@@ -1,0 +1,25 @@
+INDEX VERSION 1.131+C:\Users\faree\Documents\Github\Farees_Development\ICS4U_EclipseWorkspace\.metadata\.plugins\org.eclipse.jdt.core
+89633022.index
+2200875372.index
+2973695523.index
+3220192583.index
+1472749223.index
+3206819437.index
+3166927587.index
+711050520.index
+3839578677.index
+858989570.index
+271785946.index
+1148937498.index
+3993276655.index
+2538946849.index
+686889833.index
+3450831843.index
+1741647643.index
+3720716507.index
+2609714019.index
+2946322960.index
+615226062.index
+4159017284.index
+561689436.index
+1542774334.index

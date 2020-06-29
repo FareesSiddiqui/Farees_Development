@@ -1,0 +1,68 @@
+import processing.core.*;
+
+public class Main extends PApplet{
+	
+	public static int cols = 50, rows = 50;
+	
+	public boolean[] keys = new boolean[5]; // used later
+	
+	Node[][] grid = new Node[cols][rows];
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		PApplet.main("Main");
+	}
+	
+	void generateGrid() {
+		for(int i = 0; i < cols; i++) {
+			for(int j = 0; j < rows; j++) {
+				grid[i][j] = new Node(i, j, this);
+			}
+		}
+	}
+	
+	void spawnGrid(int r, int g, int b) {
+		for(int i = 0; i < cols; i++) {
+			for(int j = 0; j < rows; j++) {
+				grid[i][j].show(r, g, b);
+			}
+		}
+	}
+	
+	public void settings() {
+		size(900, 900);
+		
+	}
+	
+	
+	public void setup() {
+		background(255);
+		for(int i = 0; i < cols; i++) {
+			for(int j = 0; j < rows; j++) {
+				grid[i][j] = new Node(i, j, this);
+			}
+		}
+		
+		for(int i = 0; i < cols; i++) {
+			for(int j = 0; j < rows; j++) {
+				grid[i][j].show(0, 0, 0);;
+			}
+		}
+		
+	}
+	
+	
+	public void draw() {
+		
+		
+		
+	}
+	
+	public void keyPressed() {
+		
+	}
+	
+	public void keyReleased() {
+		
+	}
+}

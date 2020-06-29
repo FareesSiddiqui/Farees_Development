@@ -1,0 +1,115 @@
+import java.util.ArrayList;
+
+import processing.core.*;
+
+public class Main extends PApplet{
+	
+	public static int cols = 50, rows = 50;
+	
+	public boolean[] keys = new boolean[5]; // used later
+	
+	Node[][] grid = new Node[cols][rows];
+	
+	ArrayList<Node> openSet = new ArrayList<Node>();
+	
+	ArrayList<Node> closedSet = new ArrayList<Node>();
+	
+	Node Start, End, current
+	;
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		PApplet.main("Main");
+	}
+	
+	void generateGrid() {
+		for(int i = 0; i < cols; i++) {
+			for(int j = 0; j < rows; j++) {
+				grid[i][j] = new Node(i, j, this);
+			}
+		}
+	}
+	
+	void spawnGrid(int r, int g, int b) {
+		for(int i = 0; i < cols; i++) {
+			for(int j = 0; j < rows; j++) {
+				grid[i][j].show(r, g, b);
+			}
+		}
+	}
+	
+	public void settings() {
+		size(900, 900);
+		
+	}
+	
+	public void AStar() {
+		
+	}
+	
+	
+	
+	
+	public void setup() {
+		background(255);
+		generateGrid();
+		spawnGrid(255,255,255);
+		Start = grid[0][0];
+		End = grid[rows-1][cols-1];
+		openSet.add(Start);
+	}
+	
+	public void removeFromArray(ArrayList<Node> e, Node elt) {
+		
+	}
+	
+	public void draw() {
+		if(openSet.size() > 0) {
+			int winner = 0; // winning index, lowest f cost
+			
+			for(int i = 0; i < openSet.size(); i++) {
+				if(openSet.get(i).get_fCost() < openSet.get(winner).get_fCost()) {
+					winner = i;
+				}
+			}
+			
+			current = openSet.get(winner);
+			
+			
+			if(openSet.get(winner) == End) {
+				println("DONE!");
+			}
+			removeFromArray(openSet, current);
+			closedSet.add(current);
+		}
+		
+		else {
+			
+		}
+		
+		
+		try {
+			for(int i = 0; i < openSet.size(); i++) {
+				openSet.get(i).show(0, 255, 0);
+			}
+			
+			for(int i = 0; i < openSet.size(); i++) {
+				closedSet.get(i).show(255, 0, 0);	
+			}
+			
+		}
+		
+		catch(Exception e) {
+			
+		}
+		
+	}
+	
+	public void keyPressed() {
+		
+	}
+	
+	public void keyReleased() {
+		
+	}
+}

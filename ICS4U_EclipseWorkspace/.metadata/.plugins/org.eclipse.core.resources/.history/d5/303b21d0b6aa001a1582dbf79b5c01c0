@@ -1,0 +1,33 @@
+import processing.core.*;
+
+public class Main extends PApplet{
+	
+	public static int cols = 50, rows = 50;
+	
+	public boolean[] keys = new boolean[5]; // used later
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		PApplet.main("Main");
+	}
+	
+	public void settings() {
+		
+	}
+	
+	public void setup() {
+		
+	}
+	
+	public void draw() {
+		
+	}
+	
+	public void keyPressed() {
+		
+	}
+	
+	public void keyReleased() {
+		
+	}
+}

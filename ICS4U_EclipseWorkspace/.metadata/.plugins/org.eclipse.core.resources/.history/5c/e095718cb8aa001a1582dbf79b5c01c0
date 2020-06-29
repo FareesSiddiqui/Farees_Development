@@ -1,0 +1,51 @@
+import processing.core.*;
+public class Node {
+
+	private int i, j, w = 900/Main.rows, h = 900/Main.cols;
+	
+	private double  fCost, gCost, hCost;
+	
+	protected final PApplet p;
+	
+	Node(int _i, int _j, PApplet _p){
+		p = _p;
+		i = _i;
+		j = _j;
+		gCost = 0;
+		fCost = 0;
+		hCost = 0;
+	}
+	
+	void show(int r, int g, int b) {
+		p.fill(r, g, b);
+		p.rect(this.i*this.w, this.j*this.h, this.w, this.h);
+	}
+	
+	void set_hCost(double _h) {
+		this.hCost = _h;
+	}
+	
+	double get_hCost() {
+		return this.hCost;
+	}
+	
+	void set_gCost(double _g) {
+		this.gCost = _g;
+	}
+	
+	double get_gCost() {
+		return this.gCost;
+	}
+	
+	void set_fCost(double _f) {
+		this.fCost = _f;
+	}
+	
+	double get_fCost() {
+		return this.fCost;
+	}
+	
+	
+	
+	
+}

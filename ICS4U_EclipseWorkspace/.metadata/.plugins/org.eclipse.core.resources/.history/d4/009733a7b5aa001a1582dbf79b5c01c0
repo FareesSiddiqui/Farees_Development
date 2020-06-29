@@ -1,0 +1,12 @@
+import processing.core.*;
+
+public class Main extends PApplet{
+	
+	public static int cols = 50, rows = 50;
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		PApplet.main("Main");
+	}
+
+}

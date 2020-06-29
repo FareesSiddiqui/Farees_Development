@@ -1,0 +1,69 @@
+import processing.core.*;
+import java.util.ArrayList;
+
+public class Node {
+
+	private int i, j, w = 900/Main.rows, h = 900/Main.cols;
+	
+	private double  fCost, gCost, hCost;
+	
+	protected final PApplet p;
+	
+	public static ArrayList<Node> neighbors = new ArrayList<Node>();
+	
+	Node(int _i, int _j, PApplet _p){
+		p = _p;
+		i = _i;
+		j = _j;
+		gCost = 0;
+		fCost = 0;
+		hCost = 0;
+	}
+	
+	void addNeighbors(Node[][] g) {
+		
+		if(i < Main.cols - 1) {
+			neighbors.add(g[i+1][j]);
+		}
+		
+		if()
+			neighbors.add(g[i-1][j]);
+		}
+		neighbors.add(g[i][j+1]);
+		neighbors.add(g[i][j-1]);
+	}
+	
+	void show(int r, int g, int b) {
+		p.fill(r, g, b);
+		p.stroke(0);
+		p.rect(this.i*this.w-1, this.j*this.h-1, this.w, this.h);
+	}
+	
+	void set_hCost(double _h) {
+		this.hCost = _h;
+	}
+	
+	double get_hCost() {
+		return this.hCost;
+	}
+	
+	void set_gCost(double _g) {
+		this.gCost = _g;
+	}
+	
+	double get_gCost() {
+		return this.gCost;
+	}
+	
+	void set_fCost(double _f) {
+		this.fCost = _f;
+	}
+	
+	double get_fCost() {
+		return this.fCost;
+	}
+	
+	
+	
+	
+}

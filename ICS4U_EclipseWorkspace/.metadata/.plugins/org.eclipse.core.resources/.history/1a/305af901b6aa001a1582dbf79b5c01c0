@@ -1,0 +1,22 @@
+import processing.core.*;
+public class Node {
+
+	private int i, j, w, h, fCost, gCost, hCost;
+	
+	protected final PApplet p;
+	
+	Node(int _i, int _j, PAapplet _p){
+		this.p = _p;
+		this.i = _i;
+		this.j = _j;
+		this.w = 900/Main.cols;
+		this.gCost = 0;
+		this.fCost = 0;
+		this.hCost = 0;
+		
+	}
+	
+	
+	
+	
+}

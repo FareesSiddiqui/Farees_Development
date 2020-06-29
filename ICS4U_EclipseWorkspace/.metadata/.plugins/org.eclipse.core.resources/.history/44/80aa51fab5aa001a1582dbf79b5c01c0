@@ -1,0 +1,19 @@
+import processing.core.*;
+public class Node {
+
+	private int i, j, w, h, fCost, gCost, hCost;
+	
+	Node(int _i, int _j){
+		
+		this.i = _i;
+		this.j = _j;
+		this.w = 900/Main.cols;
+		this.gCost = 0;
+		this.fCost = 0;
+		this.hCost = 0;
+	}
+	
+	
+	
+	
+}
